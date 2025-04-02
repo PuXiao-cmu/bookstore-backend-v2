@@ -8,7 +8,11 @@ module.exports = function validateJWT(req, res, next) {
     const [header, payload] = token.split('.');
     try {
       const decoded = JSON.parse(Buffer.from(payload, 'base64url').toString());
-  
+      
+      if (!decoded.sub || !decoded.iss || !decoded.exp) {
+        return res.status(401).json({ message: 'Missing claims in token' });
+      }
+      
       const allowedSubs = ['starlord', 'gamora', 'rocket', 'drax', 'groot'];
       if (!allowedSubs.includes(decoded.sub)) {
         return res.status(401).json({ message: 'Invalid sub' });

@@ -6,8 +6,8 @@ const bookController = require('../controllers/bookController');
 router.post('/', bookController.addBook);
 
 // Retrieve book by ISBN (supports two path formats)
-router.get('/:isbn', bookController.getBookByISBN);
 router.get('/isbn/:isbn', bookController.getBookByISBN);
+router.get('/:isbn', bookController.getBookByISBN);
 
 // Update book information (PUT /books/:isbn)
 router.put('/:isbn', bookController.updateBook);
